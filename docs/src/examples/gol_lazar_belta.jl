@@ -1,28 +1,15 @@
 using Test     #src
 # # Example: Gol, Lazar and Belta (2013)
 #
-<<<<<<< HEAD
-#md # [![Binder](https://mybinder.org/badge_logo.svg)](@__BINDER_ROOT_URL__/gol_lazar_belta.ipynb)
-#md # [![nbviewer](https://img.shields.io/badge/show-nbviewer-579ACA.svg)](@__NBVIEWER_ROOT_URL__/gol_lazar_belta.ipynb)
+#md # [![Binder](https://mybinder.org/badge_logo.svg)](@__BINDER_ROOT_URL__/generated/gol_lazar_belta.ipynb)
+#md # [![nbviewer](https://img.shields.io/badge/show-nbviewer-579ACA.svg)](@__NBVIEWER_ROOT_URL__/generated/gol_lazar_belta.ipynb)
 #
 # This example was borrowed from [1, Example VIII.A] and tackles 
-=======
-#md # [![Binder](https://mybinder.org/badge_logo.svg)](@__BINDER_ROOT_URL__/literate/literate_gol_lazar_belta.ipynb)
-#md # [![nbviewer](https://img.shields.io/badge/show-nbviewer-579ACA.svg)](@__NBVIEWER_ROOT_URL__/literate/literate_gol_lazar_belta.ipynb)
-#
-# This example was borrowed from [[1, Example VIII.A]](#1) and tackles 
->>>>>>> 145b0dcf025a738aa866d00e1d10314f05aa84cd
 # an optimal control for the hybrid system with state evolution governed by 
-#nb # ```math
-#nb # x(k+1) = \begin{bmatrix} 1 & 1 \\ 0 & 1 \end{bmatrix}x(k) + \begin{bmatrix} 0.5 \\ 1.0 \end{bmatrix} u(k) 
-#nb # ```
-#md # 
-<<<<<<< HEAD
-#md # ![equation](https://latex.codecogs.com/svg.latex?x(k&plus;1)&space;=&space;\begin{bmatrix}&space;1&space;&&space;1&space;\\\\&space;0&space;&&space;1&space;\end{bmatrix}x(k)&space;&plus;&space;\begin{bmatrix}&space;0.5&space;\\\\&space;1.0&space;\end{bmatrix}&space;u(k)) 
-=======
-#md # <img src="https://latex.codecogs.com/svg.latex?x(k&plus;1)&space;=&space;\begin{bmatrix}&space;1&space;&&space;1&space;\\&space;0&space;&&space;1&space;\end{bmatrix}x(k)&space;&plus;&space;\begin{bmatrix}&space;0.5&space;\\&space;1.0&space;\end{bmatrix}&space;u(k)" title="x(k+1) = \begin{bmatrix} 1 & 1 \\ 0 & 1 \end{bmatrix}x(k) + \begin{bmatrix} 0.5 \\ 1.0 \end{bmatrix} u(k)" />
->>>>>>> 145b0dcf025a738aa866d00e1d10314f05aa84cd
-#md #
+# ```math
+# x(k+1) = \begin{bmatrix} 1 & 1 \\ 0 & 1 \end{bmatrix}x(k) + \begin{bmatrix} 0.5 \\ 1.0 \end{bmatrix} u(k) 
+# ```
+
 # The goal is to take the state vector toward a target set **XT** by visiting one of the squares
 # **A** or **B** and avoiding the obstacles **O1** and **O2**
 
@@ -45,11 +32,7 @@ using Dionysos
 # And the file defining the hybrid system for this problem
 include(joinpath(dirname(dirname(pathof(Dionysos))), "examples", "gol_lazar_belta.jl"))
 
-<<<<<<< HEAD
 # Now we instantiate our system using the function provided by [gol\_lazar\_belta.jl](@__REPO_ROOT_URL__/examples/gol_lazar_belta.jl)
-=======
-# Now we instantiate our system using the function provided by [gol_lazar_belta.jl](@__REPO_ROOT_URL__/examples/gol_lazar_belta.jl)
->>>>>>> 145b0dcf025a738aa866d00e1d10314f05aa84cd
 system = gol_lazar_belta(CDDLib.Library());
 
 
@@ -71,25 +54,15 @@ transition_cost = QuadraticControlFunction(ones(1, 1))
 problem = OptimalControlProblem(
     system,
     q0, x0,
-<<<<<<< HEAD
     Fill(state_cost, N), 
     Fill(Fill(transition_cost, ntransitions(system)), N), 
-=======
-    Fill(state_cost, N),
-    Fill(Fill(transition_cost, ntransitions(system)), N),
->>>>>>> 145b0dcf025a738aa866d00e1d10314f05aa84cd
     system.ext[:q_T],
     N
 );
 
 
-<<<<<<< HEAD
 # Notice that we used `Fill` for all `N` time steps as we consider time-invariant costs. 
 # Finally, we select the method presented in [2] as our optimizer
-=======
-
-# Finally, we select the method presented in [[2]](#2) as our optimizer
->>>>>>> 145b0dcf025a738aa866d00e1d10314f05aa84cd
 
 qp_solver = optimizer_with_attributes(
     OSQP.Optimizer,
@@ -128,18 +101,12 @@ algo = optimizer_with_attributes(BemporadMorari.Optimizer,
 # MathOptInterface provided by [JuMP](https://github.com/jump-dev/JuMP.jl)  
 optimizer = MOI.instantiate(algo)
 MOI.set(optimizer, MOI.RawParameter("problem"), problem)
-<<<<<<< HEAD
 MOI.optimize!(optimizer)
 
 # We check the solver time
 MOI.get(optimizer, MOI.SolveTime())
 
 # the termination status 
-=======
-@time MOI.optimize!(optimizer)
-
-# We check the termination status 
->>>>>>> 145b0dcf025a738aa866d00e1d10314f05aa84cd
 termination = MOI.get(optimizer, MOI.TerminationStatus()) 
 
 # the objective value
@@ -194,14 +161,6 @@ x2 = [xu.x[j][2] for j in eachindex(xu.x)]
 scatter!(p, x1, x2)
 
 # ### References
-<<<<<<< HEAD
 # 
 # 1. Gol, E. A., Lazar, M., & Belta, C. (2013). Language-guided controller synthesis for linear systems. IEEE Transactions on Automatic Control, 59(5), 1163-1176.
 # 1. Bemporad, A., & Morari, M. (1999). Control of systems integrating logic, dynamics, and constraints. Automatica, 35(3), 407-427.
-=======
-# <a id="1">[1]</a> 
-# Gol, E. A., Lazar, M., & Belta, C. (2013). Language-guided controller synthesis for linear systems. IEEE Transactions on Automatic Control, 59(5), 1163-1176.
-#
-# <a id="2">[2]</a>
-# Bemporad, A., & Morari, M. (1999). Control of systems integrating logic, dynamics, and constraints. Automatica, 35(3), 407-427.
->>>>>>> 145b0dcf025a738aa866d00e1d10314f05aa84cd
